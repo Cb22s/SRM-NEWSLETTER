@@ -1,0 +1,39 @@
+TEST ON A REAL IPHONE BEFORE YOU TRUST THIS
+============================================
+
+I could not test this on real iOS hardware - no Safari/iPhone available in
+my environment. Everything was verified by simulation. Please run this on an
+actual iPhone once it's deployed, on real cellular data if you can, not just
+your home wifi:
+
+1. Open the Netlify link on the iPhone. The home page should appear within
+   a couple of seconds. If it hangs or the tab goes white/reloads itself,
+   that is iOS's out-of-memory tab kill - screenshot it and send it to me.
+
+2. Tap "Open BookFlip" on the general MBA Newsletter. It should open within
+   a few seconds and show page 1.
+
+3. Swipe/flip through at least 15 pages. Pages should render sharp, not stay
+   blank. If a page stays permanently blank, note the page number.
+
+4. Rotate the phone (portrait <-> landscape) two or three times while reading.
+   The book should resize cleanly with no missing or doubled pages.
+
+5. Tap the fullscreen icon (the corners icon).
+     - iOS 17.4 or newer: should expand to fullscreen.
+     - Older iOS: the button should not be there at all (this is intentional -
+       see READ-ME-FIRST.txt). If you see the button but tapping it does
+       nothing, tell me your iOS version.
+
+6. Tap the download icon (down arrow).
+     - Should open the PDF in a new Safari tab, showing Safari's own PDF
+       viewer with a Share icon top-right. Tap Share -> Save to Files to
+       actually save it - that's the correct iOS flow, not a bug.
+
+7. Go to Settings -> Safari -> Advanced -> Website Data on the phone
+   afterwards, find the site, and check it isn't holding an unreasonable
+   amount of storage after just reading a few pages.
+
+Anything that doesn't match the above, tell me exactly what step and what
+you saw (a screenshot is ideal) and I'll dig into that specific failure
+instead of guessing again.

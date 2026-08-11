@@ -1,0 +1,41 @@
+SRM MBA NEWSLETTERS - DEPLOY FOLDER (v2, iOS fixes)
+====================================================
+
+Drag this whole folder (or the zip next to it) onto  https://app.netlify.com/drop
+
+WHAT'S NEW IN THIS VERSION
+  Two iOS-specific fixes on top of the previous patch:
+
+  1. Fullscreen button. iPhone Safari has no Fullscreen API on ordinary page
+     elements before iOS 17.2, and it's inconsistent even after. The button
+     now detects support and hides itself instead of doing nothing when tapped.
+
+  2. Download button. iOS Safari has never supported the download="" attribute
+     on links (still true, unresolved WebKit bug 167341). Tapping the old
+     button on an iPhone/iPad silently failed to save anything. It now opens
+     the PDF in a new tab instead, where Safari's built-in PDF viewer has its
+     own Share -> Save to Files option. Every other browser is unaffected and
+     still gets the direct one-click download.
+
+  Everything outside the <script> block is still byte-identical to the file
+  in your original zip - verified by hash before and after this change.
+
+MOST LIKELY CAUSE OF THE ORIGINAL "DOESN'T WORK ON iOS"
+  The old script downloaded both newsletters (about 399 MB) into memory the
+  moment the page loaded, before anyone clicked anything. iOS Safari kills a
+  tab outright once it uses too much memory - this is one of the most common,
+  well-documented iOS Safari failures for exactly this kind of app. That
+  preload was removed in the previous patch, which is almost certainly why
+  the site failed to open at all on iPhones. This version keeps that fix and
+  adds the two smaller iOS-only issues above.
+
+WHAT I HAVE NOT BEEN ABLE TO TEST
+  I do not have a real iOS device or Safari in this environment. Everything
+  above was verified with a scripted simulation of iOS's platform, user-agent,
+  and Fullscreen API behaviour, not a real phone. Test on an actual iPhone
+  before you consider this final - see TEST-ON-IPHONE.txt for exactly what
+  to check and what "working" looks like.
+
+KEEP YOUR ORIGINAL PDFs
+  These are compressed copies (253 MB->42 MB, 129 MB->8.8 MB, images only,
+  text untouched). Keep your originals as print masters.
