@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Text Archive — MBA Newsletters | SRMIST Trichy</title>
+<meta name="description" content="Full text of every page of the MBA Newsletter and MBA Healthcare & Hospital Management Newsletter, Faculty of Management, SRM Institute of Science and Technology, Tiruchirappalli.">
+<link rel="canonical" href="archive.html">
+<style>
+:root{--navy:#06152b;--gold:#e1b84b;--text:#e9eef5;--muted:#9fb2c8}
+*{box-sizing:border-box}
+body{margin:0;background:var(--navy);color:var(--text);
+  font-family:"Segoe UI",-apple-system,Arial,sans-serif;line-height:1.65}
+.wrap{max-width:760px;margin:0 auto;padding:36px 20px 80px}
+a.back{color:var(--gold);text-decoration:none;font-size:14px;font-weight:600}
+a.back:hover{text-decoration:underline}
+h1{font-size:26px;margin:22px 0 6px}
+.lead{color:var(--muted);font-size:14px;margin:0 0 34px}
+h2{font-size:19px;margin:44px 0 4px;padding-top:20px;border-top:1px solid #ffffff1f}
+.bmeta{color:var(--muted);font-size:13px;margin:0 0 20px}
+details{border:1px solid #ffffff1a;border-radius:10px;margin:0 0 8px;background:#ffffff08}
+summary{padding:12px 14px;cursor:pointer;font-size:13px;font-weight:600;color:#cfe0f2;
+  list-style:none;display:flex;gap:10px}
+summary::-webkit-details-marker{display:none}
+summary .n{color:var(--gold);min-width:2.4em}
+details[open] summary{border-bottom:1px solid #ffffff1a}
+.body{padding:14px 16px 16px;font-size:14.5px;color:#d7e2ee;white-space:pre-wrap}
+.jump{font-size:12px;color:var(--muted);margin:2px 0 18px}
+.jump a{color:#8fb4dd;margin-right:10px;text-decoration:none}
+.jump a:hover{text-decoration:underline}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <a class="back" href="index.html">&larr; Back to reader</a>
+  <h1>Text Archive</h1>
+  <p class="lead">Plain-text transcript of every page, for search engines, screen readers, and Ctrl+F. For the illustrated version, use the <a class="back" href="index.html" style="text-decoration:underline">page reader</a>.</p>
+
+  <div id="out">Loading…</div>
+</div>
+
+<script>
+(function(){
+var BOOKS=[
+  {key:"mba",title:"MBA Newsletter",meta:"August 2026 · Volume 01, Issue 01 · 65 pages",file:"assets/text-mba.json"},
+  {key:"healthcare",title:"MBA Healthcare & Hospital Management",meta:"Aug 2025 – Apr 2026 · Volume 01 · 24 pages · text via OCR",file:"assets/text-healthcare.json"}
+];
+function esc(s){return s.replace(/[&<>]/g,function(c){return({"&":"&amp;","<":"&lt;",">":"&gt;"})[c];});}
+Promise.all(BOOKS.map(function(b){return fetch(b.file).then(function(r){return r.json();});}))
+.then(function(all){
+  var html="";
+  BOOKS.forEach(function(b,bi){
+    var pages=all[bi];
+    html+='<h2>'+b.title+'</h2><p class="bmeta">'+b.meta+'</p>';
+    html+='<p class="jump">'+pages.map(function(_,i){return '<a href="#'+b.key+'-p'+(i+1)+'">'+(i+1)+'</a>';}).join('')+'</p>';
+    pages.forEach(function(t,i){
+      html+='<details id="'+b.key+'-p'+(i+1)+'"><summary><span class="n">p.'+(i+1)+'</span> '+
+        esc((t||'').slice(0,90))+(t&&t.length>90?'…':'')+'</summary>'+
+        '<div class="body">'+esc(t||'(no text on this page)')+'</div></details>';
+    });
+  });
+  document.getElementById("out").innerHTML=html;
+  if(location.hash){
+    var el=document.querySelector(location.hash);
+    if(el){ el.open=true; el.scrollIntoView(); }
+  }
+})
+.catch(function(){ document.getElementById("out").textContent="Could not load archive text."; });
+})();
+</script>
+</body>
+</html>
